@@ -1,4 +1,4 @@
-package domain;
+package javaee.domain;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -17,18 +17,16 @@ public class PrivatKunde extends Kunde {
 		return cprnr;
 	}
 
-	public PrivatKunde setCprnr(String cprnr) {
+	public void setCprnr(String cprnr) {
 		this.cprnr = cprnr;
-		return this;
 	}
 
 	public LocalDate getBirthdate() {
 		return birthdate;
 	}
 
-	public PrivatKunde setBirthdate(LocalDate birthdate) {
+	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
-		return this;
 	}
 	
 	@Override

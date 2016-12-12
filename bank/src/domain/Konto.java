@@ -3,9 +3,9 @@ package domain;
 import java.math.BigDecimal;
 
 public class Konto {
-	private int kundeid;
 	private int regnr; 
 	private int kontonr;
+	private int kundeid;
 	private int kontotype;
 	private BigDecimal saldo;
 	

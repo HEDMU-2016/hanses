@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<body>
+	<h:form>
+	<h1>Kundedetail</h1>
+		<p:messages id="messages" showDetail="false" autoUpdate="true" />
+
+		<h:panelGrid id="grid" columns="3" cellpadding="5">
+			<p:outputLabel for="user" value="Kunde:" />
+			<p:inputText id="user" required="true"
+				disabled="true"
+				value="#{userDetailModel.user.kundeId}" />
+			<p:message for="user" />
+
+			<p:outputLabel for="navn" value="Navn:" />
+			<p:inputText id="navn" required="true"
+				disabled="#{userDetailModel.notEdit}"
+				value="#{userDetailModel.user.navn}" />
+			<p:message for="navn" />
+
+			<p:outputLabel for="startdato" value="Startdato:" />
+			<p:calendar id="startdato" required="true"
+				disabled="#{userDetailModel.notEdit}"
+				value="#{userDetailModel.startdato}" 
+				pattern="yyyy-MM-dd"/>
+			<p:message for="startdato" />
+
+			<p:outputLabel for="slutdato" value="Slutdato:" />
+			<p:calendar id="slutdato" required="true"
+				disabled="#{userDetailModel.notEdit}"
+				value="#{userDetailModel.slutdato}" 
+				pattern="yyyy-MM-dd"/>
+			<p:message for="slutdato" />
+
+			<p:outputLabel for="email" value="Email:" />
+			<p:inputText id="email" required="true"
+				disabled="#{userDetailModel.notEdit}"
+				value="#{userDetailModel.user.email}" />
+			<p:message for="email" />
+
+			<p:outputLabel for="cpr" value="CPR-nummer:"
+				rendered="#{userDetailModel.privatKunde}" />
+			<p:inputText id="cpr" required="true"
+				disabled="#{userDetailModel.notEdit}"
+				rendered="#{userDetailModel.privatKunde}"
+				value="#{userDetailModel.user.cprnr}" />
+			<p:message for="cpr" 
+				rendered="#{userDetailModel.privatKunde}"/>
+
+			<p:outputLabel for="telefon" value="Telefon:" />
+			<p:inputText id="telefon" required="true"
+				disabled="#{userDetailModel.notEdit}"
+				value="#{userDetailModel.user.telefon}" />
+			<p:message for="telefon" />
+
+			<p:outputLabel for="gade" value="Gade:" />
+			<p:inputText id="gade" required="true"
+				disabled="#{userDetailModel.notEdit}"
+				value="#{userDetailModel.user.gade}" />
+			<p:message for="gade" />
+
+			<p:outputLabel for="postnr" value="Postnummer:" />
+			<p:inputText id="postnr" required="true"
+				disabled="#{userDetailModel.notEdit}"
+				value="#{userDetailModel.user.postnr}" />
+			<p:message for="postnr" />
+
+			<p:outputLabel for="by" value="By:" />
+			<p:inputText id="by" required="true"
+				disabled="#{userDetailModel.notEdit}"
+				value="#{userDetailModel.user.by}" />
+			<p:message for="by" />
+
+		</h:panelGrid>
+
+		<p:commandButton id="back" value="Tilbage" immediate="true"
+			action="/KundeOversigt.xhtml" ajax="false" />
+		<p:commandButton id="create" value="Opret" update="grid"
+			rendered="#{userDetailModel.showCreate}"
+			actionListener="#{userDetailControl.create}" ajax="false" />
+		<p:commandButton id="update" value="Opdater" update="grid"
+			rendered="#{userDetailModel.showUpdate}"
+			actionListener="#{userDetailControl.update}" ajax="false" />
+	</h:form>
+</body>
+</html>

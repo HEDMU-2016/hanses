@@ -1,11 +1,11 @@
-package domain;
+package javaee.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public abstract class Kunde implements Serializable {
 	private static final long serialVersionUID = 1L;
-	protected long dbid;
+	protected long kundeId;
 	protected LocalDate startdato;
 	protected LocalDate slutdato;
 	protected String navn;
@@ -21,93 +21,76 @@ public abstract class Kunde implements Serializable {
 	
 	public abstract String getId();
 
-	public long getDbid() {
-		return dbid;
+	public long getKundeId() {
+		return kundeId;
 	}
 
-	public Kunde setDbid(long dbid) {
-		this.dbid = dbid;
-		return this;
+	public void setKundeId(long kundeId) {
+		this.kundeId = kundeId;
 	}
 
 	public LocalDate getStartdato() {
 		return startdato;
 	}
 
-	public Kunde setStartdato(LocalDate startdato) {
+	public void setStartdato(LocalDate startdato) {
 		this.startdato = startdato;
-		return this;
 	}
 
 	public LocalDate getSlutdato() {
 		return slutdato;
 	}
 
-	public Kunde setSlutdato(LocalDate slutdato) {
+	public void setSlutdato(LocalDate slutdato) {
 		this.slutdato = slutdato;
-		return this;
 	}
 
 	public String getNavn() {
 		return navn;
 	}
 
-	public Kunde setNavn(String navn) {
+	public void setNavn(String navn) {
 		this.navn = navn;
-		return this;
 	}
 
 	public String getGade() {
 		return gade;
 	}
 
-	public Kunde setGade(String gade) {
+	public void setGade(String gade) {
 		this.gade = gade;
-		return this;
 	}
 
 	public String getPostnr() {
 		return postnr;
 	}
 
-	public Kunde setPostnr(String postnr) {
+	public void setPostnr(String postnr) {
 		this.postnr = postnr;
-		return this;
 	}
 
 	public String getBy() {
 		return by;
 	}
 
-	public Kunde setBy(String by) {
+	public void setBy(String by) {
 		this.by = by;
-		return this;
 	}
 
 	public String getTelefon() {
 		return telefon;
 	}
 
-	public Kunde setTelefon(String telefon) {
+	public void setTelefon(String telefon) {
 		this.telefon = telefon;
-		return this;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public Kunde setEmail(String email) {
+	public void setEmail(String email) {
 		this.email = email;
-		return this;
 	}
-
-	@Override
-	public String toString() {
-		return "Kunde [dbid=" + dbid + ", startdato=" + startdato + ", slutdato=" + slutdato + ", navn=" + navn
-				+ ", gade=" + gade + ", postnr=" + postnr + ", by=" + by + ", telefon=" + telefon + ", email=" + email
-				+ "]";
-	}
-
 
 }

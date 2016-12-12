@@ -1,4 +1,4 @@
-package domain;
+package javaee.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,7 +10,12 @@ public class Postering implements Comparable<Postering>{
 	private int kontonr;
 	private String tekst;
 	
+	public Postering() {
+		super();
+	}
+	
 	public Postering(LocalDateTime datotid, BigDecimal belob, int regnr, int kontonr, String tekst) {
+		super();
 		this.datotid = datotid;
 		this.belob = belob;
 		this.regnr = regnr;
@@ -37,6 +42,22 @@ public class Postering implements Comparable<Postering>{
 		return tekst;
 	}
 
+	public void setDatotid(LocalDateTime datotid) {
+		this.datotid = datotid;
+	}
+	public void setBelob(BigDecimal belob) {
+		this.belob = belob;
+	}
+	public void setRegnr(int regnr) {
+		this.regnr = regnr;
+	}
+	public void setKontonr(int kontonr) {
+		this.kontonr = kontonr;
+	}
+	public void setTekst(String tekst) {
+		this.tekst = tekst;
+	}
+
 	@Override
 	public int compareTo(Postering o) {
 		return this.datotid.isBefore(o.getDatotid()) ? 1 : -1;
@@ -46,7 +67,6 @@ public class Postering implements Comparable<Postering>{
 		return "Postering [datotid=" + datotid + ", belob=" + belob + ", regnr=" + regnr + ", kontonr=" + kontonr
 				+ ", tekst=" + tekst + "]";
 	}
-
 
 
 }
