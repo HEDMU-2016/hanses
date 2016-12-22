@@ -14,7 +14,6 @@ import javax.inject.Named;
 import org.jboss.logging.Logger;
 
 import javaee.domain.Kunde;
-import javaee.domain.PrivatKunde;
 import javaee.ejb.beans.BankBeanLocal;
 
 @Named

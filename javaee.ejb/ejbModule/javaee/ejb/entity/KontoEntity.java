@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import javaee.domain.Konto;
 
@@ -52,6 +53,7 @@ public class KontoEntity implements Serializable {
 		@JoinColumn(name="regnr", referencedColumnName="regnr"),
 		@JoinColumn(name="kontonr", referencedColumnName="kontonr")
 	})
+	@OrderBy("timestamp DESC")
 	private Collection<PosteringEntity> posteringer;
 	
 	public KontoEntity() {

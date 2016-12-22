@@ -3,12 +3,12 @@ package javaee.ejb.data;
 import static java.util.stream.Collectors.toList;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.Resource;
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -30,15 +30,10 @@ import javaee.ejb.entity.PrivatkundeEntity;
 @LocalBean
 public class KundeDataBean {
 
-	@EJB private PostnrDataBean pd;
 	@PersistenceContext private EntityManager em;
 	@Resource private SessionContext ctx;
 	
 	public long opretKunde(Kunde kunde) {
-		Optional<String> optional = pd.hentPostnr(kunde.getPostnr());
-		if (!optional.isPresent()) {
-			pd.opretPostnr(kunde.getPostnr(), kunde.getBy());
-		}
 		KundeIdEntity idEntity = new KundeIdEntity(kunde);
 		em.persist(idEntity);
 		kunde.setKundeId(idEntity.getKundeId());
@@ -57,6 +52,27 @@ public class KundeDataBean {
 	public Optional<Kunde> hentKunde(long id, LocalDate dato) {
 		KundeIdEntity entity = em.find(KundeIdEntity.class, id);
 		return map(entity, dato);
+	}
+	
+	public List<Kunde> hentKundePerioder(long id) {
+		KundeIdEntity entity = em.find(KundeIdEntity.class, id);
+		List<Kunde> kunder = new ArrayList<>();
+		if (entity != null) {
+			Kunde kunde = null;
+			for (KundeEntity kentity : entity.getKunder()) {
+				if (entity.getErhvervskunde() != null) {
+					ErhvervsKunde ekunde = new ErhvervsKunde(kentity.getNavn(), entity.getErhvervskunde().getCvrnr());
+					kunde = kentity.map(ekunde);
+					kunder.add(kunde);
+				} else if (entity.getPrivatkunde() != null) {
+					PrivatKunde pkunde = new PrivatKunde(kentity.getNavn(), entity.getPrivatkunde().getCprnr());
+					pkunde.setBirthdate(entity.getPrivatkunde().getFdato());
+					kunde = kentity.map(pkunde);
+					kunder.add(kunde);
+				}
+			}
+		}
+		return kunder;
 	}
 	
 	public Optional<Kunde> hentKunde(String cprcvr, LocalDate dato) {
@@ -83,6 +99,7 @@ public class KundeDataBean {
 		if (entity == null) {
 			throw new RuntimeException("Kunde ikke fundet med id " + kunde.getKundeId());
 		} else {
+			// Vi har en KundeIdEntity. Nu skal vi have fundet den rigtige KundeEntity
 			Iterator<KundeEntity> iterator = entity.getKunder().iterator();
 			while (iterator.hasNext()) {
 				KundeEntity next = iterator.next();
@@ -91,9 +108,12 @@ public class KundeDataBean {
 					break;
 				}
 			}
+			// Hvis vi ikke fandt den, må det være en ny periode. Indsæt i stedet for opdater
 			if (aktuelkunde == null) {
-				throw new RuntimeException("Kunde ikke fundet med startdato " + kunde.getStartdato());
+				aktuelkunde = new KundeEntity(kunde);
+				em.persist(aktuelkunde);
 			} else {
+				// Hvis vi fandt den, skal den opdateres
 				aktuelkunde.update(kunde);
 			}
 			if (entity.getPrivatkunde() != null && kunde instanceof PrivatKunde) {

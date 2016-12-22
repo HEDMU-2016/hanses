@@ -12,6 +12,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 
 import javaee.domain.Kunde;
 
@@ -42,6 +43,7 @@ public class KundeIdEntity implements Serializable {
 	
 	@OneToMany
 	@JoinColumn(name = "kundeId", referencedColumnName = "kundeId")
+	@OrderBy("startdato")
 	private Collection<KundeEntity> kunder;
 	
 	@OneToMany

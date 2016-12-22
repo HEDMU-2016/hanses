@@ -16,8 +16,8 @@ public class KontoData {
 			stmt.setInt(1, regnr);
 			stmt.setInt(2, kontonr);
 			try (ResultSet rs = stmt.executeQuery();) {
-				Konto domain = new Konto();
 				if (rs.next()) {
+					Konto domain = new Konto();
 					domain.setRegnr(regnr);
 					domain.setKontonr(kontonr);
 					domain.setKontotype(rs.getInt("kontotype"));
